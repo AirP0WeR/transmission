@@ -24,16 +24,19 @@ services:
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.transmission.rule=Host(`transmission.ypstudio.ru`)"
+      - "traefik.http.routers.transmission.rule=Host(`transmission.ypstudio.ru`) || Host(`transmission.hogin.pro`)"
       - "traefik.http.routers.transmission.entrypoints=websecure"
       - "traefik.http.services.transmission.loadbalancer.server.port=9091"
       - "traefik.http.routers.transmission.tls.certresolver=myresolver"
       - "docker-volume-backup.stop-during-backup=stopservice"
     networks:
       - traefik
+      # - ip6net
 volumes:
   transmission:
     name: transmission_transmission
 networks:
   traefik:
     name: traefik
+  # ip6net:
+  #   name: ip6net
